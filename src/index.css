@@ -1,13 +1,86 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: var(--wt-color-dark);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1 {
+  margin: 0 0 48px 0;
+}
+
+.layout {
+  min-height: 100vh;
+}
+
+.text {
+  opacity: .6;
+}
+
+.content {
+  margin: 64px auto 0;
+  position: relative;
+  max-width: 996px;
+}
+
+.column {
+  max-width: 400px;
+}
+
+.player {
+  width: 390px;
+  height: 390px;
+  border: 1px solid var(--wt-color-white-10);
+  background-color: var(--wt-color-grey-dark);
+}
+
+.player video, .player__sm video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.player__sm {
+  width: calc(100vw - 32px);
+  height: calc(100vw - 32px);
+}
+
+.recorder__lg {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.recorder-container {
+  text-align: center;
+}
+
+.timer {
+  width: 100%;
+  height: 12px;
+  background-color: var(--wt-color-white-10);
+  overflow: hidden;
+  margin: 16px 0;
+  opacity: 0;
+  transition: opacity 400ms;
+}
+
+.timer__running {
+  opacity: 1;
+}
+
+.timer .bar {
+  background-color: var(--wt-color-white);
+  height: 100%;
+  width: 100%;
+  transform: translateX(-100%);
+  transition-property: all;
+  transition-duration: 10s;
+  transition-timing-function: linear;
+}
+
+.timer .bar__running {
+  transform: translateX(0%);
+}
+
+.button__record {
+  background-color: red !important;
 }

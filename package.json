@@ -6,22 +6,28 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@webteam/breakpoints": "^0.7.4",
+    "@webteam/button": "^6.0.6",
+    "@webteam/colors": "^1.0.24",
+    "@webteam/icons": "^2.0.5",
+    "@webteam/layout": "^0.14.5",
+    "@webteam/typography": "^5.4.4",
+    "@webteam/ui-contexts": "^0.8.4",
+    "classnames": "^2.2.6",
+    "concatenateblobs": "^1.0.2",
+    "ffmpeg.js": "^4.2.9003",
     "react": "^17.0.1",
+    "react-compound-slider": "^3.3.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
+    "reactrangeslider": "^3.0.6",
+    "web-vitals": "^0.2.4",
+    "worker-file-loader": "^2.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --max-old-space-size=6144",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -34,5 +40,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@webteam/eslint-config": "^0.5.2",
+    "@webteam/eslint-config-prettier": "^1.0.4",
+    "prettier": "^2.2.0",
+    "prop-types": "^15.7.2"
   }
 }
