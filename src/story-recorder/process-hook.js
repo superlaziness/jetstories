@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/extensions
 import ffmpegworker from '!!file-loader!ffmpeg.js/ffmpeg-worker-mp4.js';
 
-const useProcessVideo = ({ resultRef }) => {
+const useProcessVideo = ({ resultRef, onUpdate }) => {
   const player = resultRef.current;
   const process = async (blob, trimState) => {
     const startTrimmerOption = trimState?.startTime
@@ -36,14 +36,16 @@ const useProcessVideo = ({ resultRef }) => {
           break;
         case 'stdout':
           console.log('worker stdout', msg.data);
+          onUpdate(msg.data);
           break;
         case 'stderr':
           console.log('worker stderr', msg.data);
+          onUpdate(msg.data);
           break;
         case 'done':
           console.log('worker done', msg.data);
           const newBlob = new Blob([Uint8Array.from(msg.data.MEMFS[0].data)], {
-            type: 'video/mp4;codecs=h264,opus'
+            type: 'video/quicktime'
           });
           const data = URL.createObjectURL(newBlob);
           player.src = data;

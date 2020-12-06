@@ -16,15 +16,19 @@ const Recorder = ({ className }) => {
   const [state, setState] = useState('idle');
   const [recordedData, setRecordedData] = useState(null);
   const [trimData, setTrimData] = useState({});
+  const [ffmpegMessage, setFfmpegMessage] = useState('');
   const resultRef = useRef(null);
-  const run = useProcessVideo({ resultRef });
+  const run = useProcessVideo({
+    resultRef,
+    onUpdate: v => setFfmpegMessage(old => `${old}'\n'${v}`)
+  });
   const handleFile = e => {
     const file = e.target.files[0];
     const fileReader = new FileReader();
     fileReader.onloadend = readerEvent => {
       const arrayBuffer = readerEvent.target.result;
       const blob = new Blob([new Uint8Array(arrayBuffer)], {
-        type: 'video/x-matroska;codecs=avc1,opus'
+        type: file.type
       });
       setRecordedData(blob);
       setState('recorded');
@@ -34,6 +38,8 @@ const Recorder = ({ className }) => {
   console.log('state', state, trimData, recordedData);
   return (
     <div className={cn(className, 'recorder-container')}>
+      <p style={{ color: 'white' }}>Status: {state}</p>
+      <p style={{ color: 'white' }}>Message: {ffmpegMessage}</p>
       <div className={bp('player', { sm: 'player__sm' })}>
         {state !== 'recorded' && (
           <CameraRecorder
@@ -68,7 +74,6 @@ const Recorder = ({ className }) => {
         Process
       </Button>
       <input type="file" id="hello" onChange={handleFile} />
-      <p>{status}</p>
     </div>
   );
 };
