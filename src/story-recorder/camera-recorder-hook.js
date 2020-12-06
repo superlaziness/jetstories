@@ -10,10 +10,16 @@ const useCameraRecorder = ({ cameraRef, onRecordComplete, isRecording }) => {
 
   const initRecorder = async () => {
     stream.current = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'user' },
+      video: {
+        facingMode: 'user',
+        width: { ideal: 4096 },
+        height: { ideal: 2160 }
+      },
       audio: true
     });
-    recorder.current = new MediaRecorder(stream.current);
+    recorder.current = new MediaRecorder(stream.current, {
+      mimeType: 'video/x-matroska;codecs=avc1,opus'
+    });
     recorder.current.ondataavailable = handleDateReceive;
 
     if (cameraRef?.current) {
