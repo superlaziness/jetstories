@@ -7,7 +7,6 @@ const useEditor = ({ playerRef, onEdit, blob }) => {
   const [duration, setDuration] = useState(0);
 
   const looper = e => {
-    if (!duration) setDuration(e.target.duration);
     const playingDuration =
       (e.target.duration * trimmer.current[1]) / 100 || e.target.duration;
     const resetTime = (trimmer.current[0] * e.target.duration) / 100 || 0;
@@ -17,9 +16,22 @@ const useEditor = ({ playerRef, onEdit, blob }) => {
     }
   };
 
-  const runPlayer = () => {
+  const runPlayer = async () => {
     const data = URL.createObjectURL(blob);
+    playerRef.current.style.opacity = 0;
     playerRef.current.src = data;
+    // set duration chrome bug hack
+    while (
+      playerRef.current.duration === Infinity ||
+      isNaN(playerRef.current.duration)
+    ) {
+      await new Promise(r => setTimeout(r, 200));
+      console.log(playerRef.current.duration);
+      playerRef.current.currentTime = 10000000 * Math.random();
+    }
+    setDuration(playerRef.current.duration);
+    playerRef.current.currentTime = 0;
+    playerRef.current.style.opacity = 1;
     playerRef.current.play();
   };
 
@@ -39,15 +51,14 @@ const useEditor = ({ playerRef, onEdit, blob }) => {
       (trimmer.current[0] * playerRef.current.duration) / 100;
     playerRef.current.play();
     setStartTime(playerRef.current.currentTime);
-    setDuration(playerRef.current.duration);
   };
 
   const trimEnd = () => {
+    if (playerRef.current.duration === Infinity) return;
     const endTrimTime = (trimmer.current[1] * playerRef.current.duration) / 100;
-    playerRef.current.currentTime = endTime - 0.2;
+    playerRef.current.currentTime = endTrimTime - 0.2;
     playerRef.current.play();
     setEndTime(endTrimTime);
-    setDuration(playerRef.current.duration);
   };
 
   const trim = value => {
