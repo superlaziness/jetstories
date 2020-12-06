@@ -18,6 +18,19 @@ const Recorder = ({ className }) => {
   const [trimData, setTrimData] = useState({});
   const resultRef = useRef(null);
   const run = useProcessVideo({ resultRef });
+  const handleFile = e => {
+    const file = e.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.onloadend = readerEvent => {
+      const arrayBuffer = readerEvent.target.result;
+      const blob = new Blob([new Uint8Array(arrayBuffer)], {
+        type: 'video/x-matroska;codecs=avc1,opus'
+      });
+      setRecordedData(blob);
+      setState('recorded');
+    };
+    fileReader.readAsArrayBuffer(file);
+  };
   console.log('state', state, trimData, recordedData);
   return (
     <div className={cn(className, 'recorder-container')}>
@@ -31,7 +44,9 @@ const Recorder = ({ className }) => {
         {state === 'recorded' && (
           <Editor videoData={recordedData} onEdit={setTrimData} />
         )}
-        <video ref={resultRef} autoPlay muted loop />
+        {state === 'recorded' && (
+          <video ref={resultRef} autoPlay muted loop controls />
+        )}
       </div>
       <Timer
         time={10}
@@ -52,6 +67,7 @@ const Recorder = ({ className }) => {
       <Button mode="contrast" onClick={() => run(recordedData, trimData)}>
         Process
       </Button>
+      <input type="file" id="hello" onChange={handleFile} />
       <p>{status}</p>
     </div>
   );
