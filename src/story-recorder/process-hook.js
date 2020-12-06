@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import ffmpegworker from '!!worker-file-loader!ffmpeg.js/ffmpeg-worker-webm.js';
+import ffmpegworker from '!!file-loader!ffmpeg.js/ffmpeg-worker-webm.js';
 
 const useProcessVideo = ({ resultRef }) => {
   const player = resultRef.current;
