@@ -1,14 +1,14 @@
 // eslint-disable-next-line import/extensions
-import ffmpegworker from '!!file-loader!ffmpeg.js/ffmpeg-worker-webm.js';
+import ffmpegworker from '!!file-loader!ffmpeg.js/ffmpeg-worker-mp4.js';
 
 const useProcessVideo = ({ resultRef }) => {
   const player = resultRef.current;
   const process = async (blob, trimState) => {
     const startTrimmerOption = trimState?.startTime
-      ? ['-ss', trimState.startTime.toFixed(3)]
+      ? ['-ss', trimState.startTime.toFixed(1)]
       : [];
     const endTrimmerOption = trimState?.endTime
-      ? ['-to', (trimState.endTime + 0.15).toFixed(3)]
+      ? ['-to', (trimState.endTime + 0.15).toFixed(1)]
       : [];
 
     console.log('trimmer option', startTrimmerOption, endTrimmerOption);
@@ -21,16 +21,16 @@ const useProcessVideo = ({ resultRef }) => {
           console.log('worker ready');
           worker.postMessage({
             type: 'run',
-            MEMFS: [{ name: 'input.webm', data: arrayBuffer }],
+            MEMFS: [{ name: 'input.mkv', data: arrayBuffer }],
             arguments: [
-              ...startTrimmerOption,
               '-i',
-              'input.webm',
+              'input.mkv',
+              ...startTrimmerOption,
               ...endTrimmerOption,
               '-copyts',
-              '-c',
+              '-vcodec',
               'copy',
-              'out.webm'
+              'out.mp4'
             ]
           });
           break;
@@ -43,7 +43,7 @@ const useProcessVideo = ({ resultRef }) => {
         case 'done':
           console.log('worker done', msg.data);
           const newBlob = new Blob([Uint8Array.from(msg.data.MEMFS[0].data)], {
-            type: 'video/webm;codecs=vp8'
+            type: 'video/mp4;codecs=h264,opus'
           });
           const data = URL.createObjectURL(newBlob);
           player.src = data;
