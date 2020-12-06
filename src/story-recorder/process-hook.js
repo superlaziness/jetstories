@@ -28,10 +28,8 @@ const useProcessVideo = ({ resultRef }) => {
               'input.webm',
               ...endTrimmerOption,
               '-copyts',
-              '-c:v',
-              'vp8',
-              '-quality',
-              'good',
+              '-c',
+              'copy',
               'out.webm'
             ]
           });
