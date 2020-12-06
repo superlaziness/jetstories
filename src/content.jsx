@@ -5,7 +5,7 @@ import { Container } from '@webteam/layout';
 import { useTextStyles } from '@webteam/typography';
 import { useBreakpoint } from '@webteam/breakpoints';
 
-import Recorder from './recorder';
+import StoryRecorder from './story-recorder';
 
 const Content = () => {
   const textCn = useTextStyles();
@@ -16,7 +16,7 @@ const Content = () => {
         <h1 className={cn('column', textCn('wt-hero'), 'header')}>
           JetStories
         </h1>
-        <Recorder
+        <StoryRecorder
           className={cn('column', bp('recorder__lg', { md: 'recorder' }))}
         />
         <p
