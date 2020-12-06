@@ -1,8 +1,11 @@
+import useS3 from './aws-hook';
+
 // eslint-disable-next-line import/extensions
 import ffmpegworker from '!!file-loader!ffmpeg.js/ffmpeg-worker-mp4.js';
 
 const useProcessVideo = ({ resultRef, onUpdate }) => {
   const player = resultRef.current;
+  const { upload } = useS3(resultRef);
   const process = async (blob, trimState) => {
     const startTrimmerOption = trimState?.startTime
       ? ['-ss', trimState.startTime.toFixed(1)]
@@ -46,6 +49,10 @@ const useProcessVideo = ({ resultRef, onUpdate }) => {
           console.log('worker done', msg.data);
           const newBlob = new Blob([Uint8Array.from(msg.data.MEMFS[0].data)], {
             type: 'video/quicktime'
+          });
+          upload({
+            name: `${new Date().getTime()}.mp4`,
+            file: newBlob
           });
           const data = URL.createObjectURL(newBlob);
           player.src = data;
