@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import { useTextStyles } from '@webteam/typography';
-import { AttachmentIcon } from '@webteam/icons';
+import { AttachmentIcon, InstagramIcon } from '@webteam/icons';
 
 import Spinner from 'react-spinner-material';
 
@@ -70,6 +70,17 @@ const Recorder = ({ className, onSuccess }) => {
     fileReader.readAsArrayBuffer(file);
   };
 
+  const createFileInput = () => {
+    const input = document.createElement('input');
+    input.hidden = 'hidden';
+    input.type = 'file';
+    input.capture = 'user';
+    input.accept = 'video/*';
+    document.getElementById('root').appendChild(input);
+    input.addEventListener('change', handleFile);
+    input.click();
+  };
+
   const bp = useBreakpoint();
   return (
     <div
@@ -113,28 +124,33 @@ const Recorder = ({ className, onSuccess }) => {
         )}
         {state === 'notSupported' && (
           <div className={bp('player', { sm: 'player__sm' })}>
-            <div className="not-supported">
+            <div className="not-supported desktop">
               {/* eslint-disable-next-line jsx-a11y/accessible-emoji */}
               <h2 className={textCn('wt-h1')}>😔</h2>
               <p className={textCn('wt-text-1')}>
                 Your browser does not support camera recording, please choose
-                file from library
+                file from the library
               </p>
               <Button
                 mode="contrast"
                 icon={<AttachmentIcon />}
-                onClick={() => {
-                  const input = document.createElement('input');
-                  input.hidden = 'hidden';
-                  input.type = 'file';
-                  input.capture = 'user';
-                  input.accept = 'video/*';
-                  document.getElementById('root').appendChild(input);
-                  input.addEventListener('change', handleFile);
-                  input.click();
-                }}
+                onClick={createFileInput}
               >
                 Choose file
+              </Button>
+            </div>
+            <div className="not-supported mobile">
+              {/* eslint-disable-next-line jsx-a11y/accessible-emoji */}
+              <h2 className={textCn('wt-h1')}>😲</h2>
+              <p className={textCn('wt-text-1')}>
+                Some motivation message here...
+              </p>
+              <Button
+                mode="contrast"
+                icon={<InstagramIcon />}
+                onClick={createFileInput}
+              >
+                Open Camera
               </Button>
             </div>
           </div>

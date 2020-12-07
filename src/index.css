@@ -151,3 +151,13 @@ h1 {
 .player:hover .mute-button {
   opacity: 1;
 }
+
+.not-supported.mobile {
+  display: none;
+}
+
+@media (hover: none) {
+  .not-supported.desktop {
+    display: none;
+  }
+}
