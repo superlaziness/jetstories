@@ -32,6 +32,7 @@ h1 {
   background-color: var(--wt-color-grey-dark);
   border-radius: 0;
   transition: all 700ms ease-in-out;
+  position: relative;
 }
 
 .player.success-animation {
@@ -52,6 +53,7 @@ h1 {
   transition: none;
   width: calc(100vw - 32px);
   height: calc(100vw - 32px);
+  position: relative;
 }
 
 .recorder__lg {
@@ -133,4 +135,19 @@ h1 {
 
 .not-supported button {
   margin: 40px;
+}
+
+.mute-button {
+  position: absolute !important;
+  left: 12px;
+  bottom: 12px;
+  opacity: 1;
+}
+
+.mute-button.mute-button__muted {
+  opacity: 0;
+}
+
+.player:hover .mute-button {
+  opacity: 1;
 }
