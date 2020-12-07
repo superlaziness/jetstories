@@ -5,6 +5,8 @@ import { CircleIcon } from '@webteam/icons';
 
 import Button from '@webteam/button';
 
+import { useBreakpoint } from '@webteam/breakpoints';
+
 import useCameraRecorder from './camera-recorder-hook';
 import Timer from './timer';
 
@@ -25,6 +27,7 @@ const CameraRecorder = ({
   onError
 }) => {
   const cameraRef = useRef();
+  const bp = useBreakpoint();
   useCameraRecorder({
     cameraRef,
     isRecording,
@@ -32,8 +35,10 @@ const CameraRecorder = ({
     onError
   });
   return (
-    <>
-      <video ref={cameraRef} autoPlay muted />
+    <div>
+      <div className={bp('player', { sm: 'player__sm' })}>
+        <video ref={cameraRef} autoPlay muted />
+      </div>
       <Timer time={10} isRunning={isRecording} onOver={onClickRecordStop} />
       {!isRecording && (
         <Button
@@ -53,7 +58,7 @@ const CameraRecorder = ({
           Record
         </Button>
       )}
-    </>
+    </div>
   );
 };
 

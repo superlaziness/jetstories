@@ -35,6 +35,7 @@ const Story = ({ onPlay, onStop, isPlaying, filePath }) => {
     if (videoRef.current) {
       videoRef.current.load();
       videoRef.current.oncanplaythrough = () => {
+        if (!videoRef.current) return;
         setVideoIsReady(true);
         if (videoRef.current.paused) {
           videoRef.current.currentTime = 2;
