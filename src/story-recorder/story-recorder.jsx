@@ -119,7 +119,8 @@ const Recorder = ({ className, onSuccess }) => {
                 const input = document.createElement('input');
                 input.onchange = handleFile;
                 input.type = 'file';
-                input.accept = 'video/mp4, video/mov';
+                input.capture = 'user';
+                input.accept = 'video/*';
                 input.click();
               }}
             >

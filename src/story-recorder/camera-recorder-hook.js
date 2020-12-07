@@ -18,6 +18,10 @@ const useCameraRecorder = ({
       onError('Browser not supported');
       return;
     }
+    if (/Android|Mobile|mobile/i.test(navigator.userAgent)) {
+      onError('Browser not supported');
+      return;
+    }
     stream.current = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: 'user',
