@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import cn from 'classnames';
 import { colCn, rowCn } from '@webteam/layout';
+import { useBreakpoint } from '@webteam/breakpoints';
 
 import { useS3 } from '../aws-hook';
 
@@ -9,6 +10,7 @@ import Story from './story';
 
 const StoryList = () => {
   const playerRef = useRef();
+  const bp = useBreakpoint();
   const { getList, list } = useS3();
   useEffect(() => {
     getList();
@@ -19,7 +21,7 @@ const StoryList = () => {
       {list.map((video, index) => (
         <div
           key={video.key}
-          className={cn(colCn({ default: 3, md: 4, sm: 12 }))}
+          className={cn(colCn({ default: 3, lg: 4, sm: 12 }))}
         >
           <Story
             filePath={video.Key}
@@ -29,50 +31,14 @@ const StoryList = () => {
           />
         </div>
       ))}
-      {list.length === 0 && (
-        <>
-          <div className={cn(colCn({ default: 3, md: 4, sm: 12 }))}>
+      {list.length === 0 &&
+        new Array(bp(8, { lg: 6, sm: 3 })).fill(undefined).map((val, index) => (
+          <div key={index} className={cn(colCn({ default: 3, lg: 4, sm: 12 }))}>
             <div className="story">
               <div className="story-wrapper" />
             </div>
           </div>
-          <div className={cn(colCn({ default: 3, md: 4, sm: 12 }))}>
-            <div className="story">
-              <div className="story-wrapper" />
-            </div>
-          </div>
-          <div className={cn(colCn({ default: 3, md: 4, sm: 12 }))}>
-            <div className="story">
-              <div className="story-wrapper" />
-            </div>
-          </div>
-          <div className={cn(colCn({ default: 3, md: 4, sm: 12 }))}>
-            <div className="story">
-              <div className="story-wrapper" />
-            </div>
-          </div>
-          <div className={cn(colCn({ default: 3, md: 4, sm: 12 }))}>
-            <div className="story">
-              <div className="story-wrapper" />
-            </div>
-          </div>
-          <div className={cn(colCn({ default: 3, md: 4, sm: 12 }))}>
-            <div className="story">
-              <div className="story-wrapper" />
-            </div>
-          </div>
-          <div className={cn(colCn({ default: 3, md: 4, sm: 12 }))}>
-            <div className="story">
-              <div className="story-wrapper" />
-            </div>
-          </div>
-          <div className={cn(colCn({ default: 3, md: 4, sm: 12 }))}>
-            <div className="story">
-              <div className="story-wrapper" />
-            </div>
-          </div>
-        </>
-      )}
+        ))}
     </div>
   );
 };
