@@ -13,18 +13,20 @@ import './story.css';
 const Story = ({ onPlay, onStop, isPlaying, filePath }) => {
   const videoRef = useRef();
   useEffect(() => {
-    if (isPlaying && videoRef.current.paused) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    } else {
-      videoRef.current.currentTime = 0;
-      videoRef.current?.pause();
+    if (!isPlaying && !videoRef.current.paused) {
+      videoRef.current.pause();
     }
   }, [isPlaying]);
 
   const handleClick = () => {
-    if (isPlaying) return onStop();
-    return onPlay();
+    if (videoRef.current.paused) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+      onPlay();
+    } else {
+      videoRef.current.pause();
+      onStop();
+    }
   };
 
   const [videoIsReady, setVideoIsReady] = useState(false);
@@ -32,9 +34,11 @@ const Story = ({ onPlay, onStop, isPlaying, filePath }) => {
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.load();
-      console.log('check', videoRef.current.oncanplaythrough);
       videoRef.current.oncanplaythrough = () => {
         setVideoIsReady(true);
+        if (videoRef.current.paused) {
+          videoRef.current.currentTime = 2;
+        }
       };
       videoRef.current.onended = onStop;
     }
@@ -57,7 +61,12 @@ const Story = ({ onPlay, onStop, isPlaying, filePath }) => {
       {/* eslint-disable-next-line jsx-a11y/media-has-caption,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div className="story-wrapper" onClick={handleClick}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-        <video src={`${s3Url}${filePath}`} ref={videoRef} preload="metadata" />
+        <video
+          src={`${s3Url}${filePath}`}
+          ref={videoRef}
+          preload="metadata"
+          playsInline
+        />
         <Button
           className="story-play-button"
           mode="contrast"
