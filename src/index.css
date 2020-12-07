@@ -82,5 +82,9 @@ h1 {
 }
 
 .button__record {
-  background-color: red !important;
+  background-color: var(--wt-color-error) !important;
+}
+
+.record-icon {
+  fill: var(--wt-color-error) !important;
 }

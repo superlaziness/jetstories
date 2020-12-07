@@ -5,6 +5,7 @@
     position: relative;
     border-left: 30px solid var(--wt-color-white);
     border-right: 30px solid var(--wt-color-white);
+    margin: 16px 0;
 }
 
 .track {
