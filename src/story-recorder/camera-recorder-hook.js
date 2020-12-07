@@ -27,7 +27,7 @@ const useCameraRecorder = ({
       audio: true
     });
     recorder.current = new MediaRecorder(stream.current, {
-      mimeType: 'video/x-matroska;codecs=avc1'
+      mimeType: 'video/webm;codecs=H264,pcm'
     });
     recorder.current.ondataavailable = handleDateReceive;
 

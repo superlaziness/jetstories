@@ -17,8 +17,6 @@ import { useProcessVideo } from './process-hook';
 import CameraRecorder from './camera-recorder';
 import Editor from './editor';
 
-// eslint-disable-next-line react/display-name
-
 const Recorder = ({ className, onSuccess }) => {
   const bp = useBreakpoint();
   const textCn = useTextStyles();
@@ -40,7 +38,6 @@ const Recorder = ({ className, onSuccess }) => {
   );
 
   const { upload } = useS3(() => setState('success'), onError);
-  console.log(processVideo);
 
   useEffect(() => {
     if (state === 'idle') {
@@ -52,6 +49,7 @@ const Recorder = ({ className, onSuccess }) => {
     }
     if (state === 'uploading') {
       upload(recordedData);
+      console.log(upload);
     }
     if (state === 'success') {
       setTimeout(() => onSuccess(), 700);

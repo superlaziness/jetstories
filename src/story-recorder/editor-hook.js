@@ -20,13 +20,11 @@ const useEditor = ({ playerRef, onEdit, blob }) => {
     const data = URL.createObjectURL(blob);
     playerRef.current.style.opacity = 0;
     playerRef.current.src = data;
-    // set duration chrome bug hack
     while (
       playerRef.current.duration === Infinity ||
       isNaN(playerRef.current.duration)
     ) {
       await new Promise(r => setTimeout(r, 200));
-      console.log(playerRef.current.duration);
       playerRef.current.currentTime = 10000000 * Math.random();
     }
     setDuration(playerRef.current.duration);
