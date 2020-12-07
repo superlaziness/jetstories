@@ -4,8 +4,11 @@ import cn from 'classnames';
 
 import { useBreakpoint } from '@webteam/breakpoints';
 import { useTextStyles } from '@webteam/typography';
+import { AttachmentIcon } from '@webteam/icons';
 
 import Spinner from 'react-spinner-material';
+
+import Button from '@webteam/button';
 
 import { useS3 } from '../aws-hook';
 
@@ -55,19 +58,20 @@ const Recorder = ({ className, onSuccess }) => {
     }
   }, [state]);
 
-  // const handleFile = e => {
-  //   const file = e.target.files[0];
-  //   const fileReader = new FileReader();
-  //   fileReader.onloadend = readerEvent => {
-  //     const arrayBuffer = readerEvent.target.result;
-  //     const blob = new Blob([new Uint8Array(arrayBuffer)], {
-  //       type: file.type
-  //     });
-  //     setRecordedData(blob);
-  //     setState('recorded');
-  //   };
-  //   fileReader.readAsArrayBuffer(file);
-  // };
+  const handleFile = e => {
+    const file = e.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.onloadend = readerEvent => {
+      const arrayBuffer = readerEvent.target.result;
+      const blob = new Blob([new Uint8Array(arrayBuffer)], {
+        type: file.type
+      });
+      setRecordedData(blob);
+      setState('recorded');
+    };
+    fileReader.readAsArrayBuffer(file);
+  };
+
   console.log('state', state, trimData, recordedData);
   return (
     <div className={cn(className, 'recorder-container')}>
@@ -83,6 +87,7 @@ const Recorder = ({ className, onSuccess }) => {
             setState={setState}
             onClickRecordStart={() => setState('recording')}
             onClickRecordStop={() => setState('recorded')}
+            onError={() => setState('notSupported')}
           />
         )}
         {state === 'recorded' && (
@@ -99,6 +104,29 @@ const Recorder = ({ className, onSuccess }) => {
             <p className={cn('loading-state-message', textCn('wt-text-3'))}>
               {state}...
             </p>
+          </div>
+        )}
+        {state === 'notSupported' && (
+          <div className="not-supported">
+            {/* eslint-disable-next-line jsx-a11y/accessible-emoji */}
+            <h2 className={textCn('wt-h1')}>😔</h2>
+            <p className={textCn('wt-text-1')}>
+              Your browser does not support camera recording, please choose file
+              from library
+            </p>
+            <Button
+              mode="contrast"
+              icon={<AttachmentIcon />}
+              onClick={() => {
+                const input = document.createElement('input');
+                input.onchange = handleFile;
+                input.type = 'file';
+                input.accept = 'video/mp4, video/mov';
+                input.click();
+              }}
+            >
+              Choose file
+            </Button>
           </div>
         )}
       </div>

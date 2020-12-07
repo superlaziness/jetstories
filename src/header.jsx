@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { colCn, rowCn, Container } from '@webteam/layout';
 import { useTextStyles } from '@webteam/typography';
 import Button from '@webteam/button';
+import { CloseIcon } from '@webteam/icons';
 
 import './logos.css';
 
@@ -30,6 +31,18 @@ const Header = ({ isFull, onButtonClick }) => {
               <Button onClick={onButtonClick} mode="contrast">
                 Add your story!
               </Button>
+            </div>
+          </>
+        )}
+        {!isFull && (
+          <>
+            <div className={colCn({ default: 'auto-fill' })}> </div>
+            <div className={colCn({ default: 'inline' })}>
+              <Button
+                onClick={onButtonClick}
+                icon={<CloseIcon />}
+                mode="contrast"
+              />
             </div>
           </>
         )}

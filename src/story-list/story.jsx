@@ -31,6 +31,8 @@ const Story = ({ onPlay, onStop, isPlaying, filePath }) => {
 
   useEffect(() => {
     if (videoRef.current) {
+      videoRef.current.load();
+      console.log('check', videoRef.current.oncanplaythrough);
       videoRef.current.oncanplaythrough = () => {
         setVideoIsReady(true);
       };
@@ -55,7 +57,12 @@ const Story = ({ onPlay, onStop, isPlaying, filePath }) => {
       {/* eslint-disable-next-line jsx-a11y/media-has-caption,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div className="story-wrapper" onClick={handleClick}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-        <video src={`${s3Url}${filePath}`} ref={videoRef} preload="metadata" />
+        <video
+          src={`${s3Url}${filePath}`}
+          ref={videoRef}
+          preload="metadata"
+          muted
+        />
         <Button
           className="story-play-button"
           mode="contrast"

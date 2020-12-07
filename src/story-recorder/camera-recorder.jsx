@@ -21,13 +21,15 @@ const CameraRecorder = ({
   onRecordComplete,
   isRecording,
   onClickRecordStart,
-  onClickRecordStop
+  onClickRecordStop,
+  onError
 }) => {
   const cameraRef = useRef();
   useCameraRecorder({
     cameraRef,
     isRecording,
-    onRecordComplete
+    onRecordComplete,
+    onError
   });
   return (
     <>
@@ -59,6 +61,7 @@ CameraRecorder.propTypes = {
   onRecordComplete: PropTypes.func.isRequired,
   onClickRecordStart: PropTypes.func.isRequired,
   onClickRecordStop: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
   isRecording: PropTypes.bool
 };
 

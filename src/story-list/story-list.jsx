@@ -16,11 +16,18 @@ const StoryList = () => {
     getList();
   }, []);
   const { play, stop, activePlayer } = usePlayer(playerRef);
+  console.log(
+    list.sort((a, b) => {
+      console.log(new Date(a.LastModified));
+      return new Date(b.LastModified) - new Date(a.LastModified);
+    })
+  );
+  console.log('list', list);
   return (
     <div className={rowCn()} ref={playerRef}>
       {list.map((video, index) => (
         <div
-          key={video.key}
+          key={video.Key}
           className={cn(colCn({ default: 3, lg: 4, sm: 12 }))}
         >
           <Story

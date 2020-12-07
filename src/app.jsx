@@ -17,7 +17,9 @@ function App() {
         <LayoutHeader>
           <Header
             isFull={state === 'player'}
-            onButtonClick={() => setState('recorder')}
+            onButtonClick={() =>
+              setState(state === 'player' ? 'recorder' : 'player')
+            }
           />
         </LayoutHeader>
         <LayoutContent>

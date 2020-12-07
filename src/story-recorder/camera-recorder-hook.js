@@ -1,6 +1,11 @@
 import { useEffect, useRef } from 'react';
 
-const useCameraRecorder = ({ cameraRef, onRecordComplete, isRecording }) => {
+const useCameraRecorder = ({
+  cameraRef,
+  onRecordComplete,
+  isRecording,
+  onError
+}) => {
   const stream = useRef();
   const recorder = useRef(null);
 
@@ -9,6 +14,10 @@ const useCameraRecorder = ({ cameraRef, onRecordComplete, isRecording }) => {
   };
 
   const initRecorder = async () => {
+    if (typeof MediaRecorder === 'undefined') {
+      onError('Browser not supported');
+      return;
+    }
     stream.current = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: 'user',
