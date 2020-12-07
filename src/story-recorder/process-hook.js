@@ -43,7 +43,7 @@ export const useProcessVideo = (onProgress, onFinish, onError) => {
           onFinish(newBlob);
           break;
         default:
-          console.log('default');
+          onProgress('no source');
           break;
       }
     };
