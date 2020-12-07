@@ -38,6 +38,10 @@
     opacity: 0;
 }
 
+.story__mobile .story-play-button {
+    opacity: 1;
+}
+
 .story__ready .story-wrapper {
     opacity: .8;
 }
@@ -58,4 +62,10 @@
     margin-top: -50px;
     margin-left: -50px;
     border-color: var(--wt-color-white-10) !important;
+}
+
+@media (hover: none) {
+    .story-play-button {
+        opacity: 1;
+    }
 }

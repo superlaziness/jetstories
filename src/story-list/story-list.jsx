@@ -10,11 +10,9 @@ import Story from './story';
 const StoryList = () => {
   const playerRef = useRef();
   const { getList, list } = useS3();
-  console.log('list', list);
   useEffect(() => {
     getList();
   }, []);
-  // const { play, activePlayer } =
   const { play, stop, activePlayer } = usePlayer(playerRef);
   return (
     <div className={rowCn()} ref={playerRef}>
