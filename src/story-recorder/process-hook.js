@@ -1,4 +1,4 @@
-import useS3 from './aws-hook';
+import { useS3 } from '../aws-hook';
 
 // eslint-disable-next-line import/extensions
 import ffmpegworker from '!!file-loader!ffmpeg.js/ffmpeg-worker-mp4.js';

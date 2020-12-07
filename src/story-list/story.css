@@ -1,0 +1,61 @@
+.story {
+    position: relative;
+    margin: 16px 0;
+    border: 1px solid var(--wt-color-white-10);
+    background-color: var(--wt-color-grey-dark);
+}
+
+.story-wrapper video {
+    position: absolute;
+    left: 0;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.story-wrapper {
+    width: 100%;
+    opacity: 0;
+    transition: opacity 400ms;
+}
+
+.story-wrapper:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.story:hover .story-play-button {
+    opacity: 1;
+}
+
+.story-play-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -18px;
+    margin-top: -18px;
+    opacity: 0;
+}
+
+.story__ready .story-wrapper {
+    opacity: .8;
+}
+
+.story__ready:hover .story-wrapper, .story__playing .story-wrapper {
+    opacity: 1;
+}
+
+.story.story__playing .story-play-button {
+    opacity: 0;
+}
+
+.story .react-spinner-material {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 200;
+    margin-top: -50px;
+    margin-left: -50px;
+    border-color: var(--wt-color-white-10) !important;
+}

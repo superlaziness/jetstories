@@ -1,31 +1,27 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AWS from 'aws-sdk';
 
-import { awsIdentityPoolId } from '../config';
+import { awsIdentityPoolId } from './config';
 
-const useS3 = () => {
+export const useS3 = () => {
+  const [list, setList] = useState([]);
   useEffect(() => {
-    AWS.config.region = 'us-east-1'; // Region
+    AWS.config.region = 'us-east-1';
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: awsIdentityPoolId
     });
-    console.log('aws');
+  }, []);
+
+  const getList = () => {
     const s3 = new AWS.S3({
       apiVersion: '2006-03-01',
       params: { Bucket: 'test-sto' }
     });
-    console.log('s3', s3);
     s3.listObjects({ Delimiter: '/' }, (err, data) => {
-      console.log('check', err, data);
+      if (data && data.Contents) setList(data.Contents);
+      if (err) console.log('failed getting list', err);
     });
-    // const objectParams = {
-    //   Bucket: 'test-sto',
-    //   Key: 'telegram-cloud-document-2-5361931506988091867.mp4'
-    // };
-    // s3.getObject(objectParams, (getErr, getData) => {
-    //   console.log('object got', getErr, getData);
-    // });
-  }, []);
+  };
 
   const upload = ({ file, name }) => {
     const uploadObject = new AWS.S3.ManagedUpload({
@@ -46,7 +42,5 @@ const useS3 = () => {
       }
     );
   };
-  return { upload };
+  return { upload, getList, list };
 };
-
-export default useS3;

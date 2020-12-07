@@ -7,7 +7,7 @@ import { useBreakpoint } from '@webteam/breakpoints';
 
 import StoryRecorder from './story-recorder';
 
-const Content = () => {
+const RecorderPage = () => {
   const textCn = useTextStyles();
   const bp = useBreakpoint();
   return (
@@ -36,4 +36,4 @@ const Content = () => {
   );
 };
 
-export default Content;
+export default RecorderPage;
