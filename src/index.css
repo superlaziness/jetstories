@@ -160,4 +160,8 @@ h1 {
   .not-supported.desktop {
     display: none;
   }
+
+  .not-supported.mobile {
+    display: block;
+  }
 }
