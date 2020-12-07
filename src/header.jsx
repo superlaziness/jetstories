@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import { colCn, rowCn, Container } from '@webteam/layout';
 import { useTextStyles } from '@webteam/typography';
@@ -27,7 +28,9 @@ const Header = ({ isFull, onButtonClick }) => {
             <div className={colCn({ default: 'auto-fill' })}>
               <span className={textCn('wt-h2')}>JetStories</span>
             </div>
-            <div className={colCn({ default: 'inline' })}>
+            <div
+              className={cn(colCn({ default: 'inline' }), 'wt-offset-top-24')}
+            >
               <Button onClick={onButtonClick} mode="contrast">
                 Add your story!
               </Button>
