@@ -61,7 +61,7 @@ const Recorder = ({ className, onSuccess }) => {
     const fileReader = new FileReader();
     fileReader.onloadend = readerEvent => {
       const arrayBuffer = readerEvent.target.result;
-      const blob = new Blob([new Uint8Array(arrayBuffer)], {
+      const blob = new Blob([arrayBuffer], {
         type: file.type
       });
       setRecordedData(blob);
