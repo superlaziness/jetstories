@@ -13,7 +13,8 @@ const Editor = ({ onEdit, videoData, onClickCancel, onClickUpload }) => {
   const { trim } = useEditor({ onEdit, blob: videoData, playerRef });
   return (
     <>
-      <video ref={playerRef} muted />
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+      <video ref={playerRef} />
       <Trimmer onChange={trim} />
       <Button mode="contrast" icon={<UploadIcon />} onClick={onClickUpload}>
         Upload

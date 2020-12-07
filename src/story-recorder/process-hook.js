@@ -15,7 +15,6 @@ export const useProcessVideo = (onProgress, onFinish, onError) => {
       const msg = e.data;
       switch (msg.type) {
         case 'ready':
-          console.log('worker ready');
           worker.postMessage({
             type: 'run',
             MEMFS: [{ name: 'input.mkv', data: arrayBuffer }],
