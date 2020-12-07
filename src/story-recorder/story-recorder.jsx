@@ -125,10 +125,12 @@ const Recorder = ({ className, onSuccess }) => {
                 icon={<AttachmentIcon />}
                 onClick={() => {
                   const input = document.createElement('input');
-                  input.onchange = handleFile;
+                  input.hidden = 'hidden';
                   input.type = 'file';
                   input.capture = 'user';
                   input.accept = 'video/*';
+                  document.getElementById('root').appendChild(input);
+                  input.addEventListener('change', handleFile);
                   input.click();
                 }}
               >
