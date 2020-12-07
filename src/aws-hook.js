@@ -3,7 +3,7 @@ import AWS from 'aws-sdk';
 
 import { awsIdentityPoolId } from './config';
 
-export const useS3 = () => {
+export const useS3 = (onSuccess, onError) => {
   const [list, setList] = useState([]);
   useEffect(() => {
     AWS.config.region = 'us-east-1';
@@ -23,11 +23,11 @@ export const useS3 = () => {
     });
   };
 
-  const upload = ({ file, name }) => {
+  const upload = file => {
     const uploadObject = new AWS.S3.ManagedUpload({
       params: {
         Bucket: 'test-sto',
-        Key: name,
+        Key: `${new Date().getTime()}.mp4`,
         Body: file,
         ACL: 'public-read'
       }
@@ -35,10 +35,10 @@ export const useS3 = () => {
     const promise = uploadObject.promise();
     promise.then(
       data => {
-        console.log('uploaded', data);
+        onSuccess(data);
       },
       err => {
-        console.log('error', err);
+        onError(err);
       }
     );
   };

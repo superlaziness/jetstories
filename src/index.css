@@ -30,6 +30,13 @@ h1 {
   height: 390px;
   border: 1px solid var(--wt-color-white-10);
   background-color: var(--wt-color-grey-dark);
+  border-radius: 0;
+  transition: all 700ms ease-in-out;
+}
+
+.player.success-animation {
+  border-radius: 300px;
+  transform: scale(.01);
 }
 
 .player video, .player__sm video {
@@ -87,4 +94,22 @@ h1 {
 
 .record-icon {
   fill: var(--wt-color-error) !important;
+}
+
+.loading-state-report .react-spinner-material {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -100px;
+  margin-top: -100px;
+  border-color: var(--wt-color-white-10) !important;
+  z-index: 300;
+}
+
+.loading-state-report {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+  text-transform: capitalize;
 }

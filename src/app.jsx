@@ -21,7 +21,9 @@ function App() {
           />
         </LayoutHeader>
         <LayoutContent>
-          {state === 'recorder' && <RecorderPage />}
+          {state === 'recorder' && (
+            <RecorderPage onSuccess={() => setState('player')} />
+          )}
           {state === 'player' && <PlayerPage />}
         </LayoutContent>
       </Layout>

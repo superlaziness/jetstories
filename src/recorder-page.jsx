@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import { Container } from '@webteam/layout';
@@ -7,7 +8,7 @@ import { useBreakpoint } from '@webteam/breakpoints';
 
 import StoryRecorder from './story-recorder';
 
-const RecorderPage = () => {
+const RecorderPage = ({ onSuccess }) => {
   const textCn = useTextStyles();
   const bp = useBreakpoint();
   return (
@@ -18,6 +19,7 @@ const RecorderPage = () => {
         </h1>
         <StoryRecorder
           className={cn('column', bp('recorder__lg', { md: 'recorder' }))}
+          onSuccess={onSuccess}
         />
         <p
           className={cn(
@@ -34,6 +36,10 @@ const RecorderPage = () => {
       </div>
     </Container>
   );
+};
+
+RecorderPage.propTypes = {
+  onSuccess: PropTypes.func.isRequired
 };
 
 export default RecorderPage;

@@ -1,20 +1,14 @@
-import { useS3 } from '../aws-hook';
-
 // eslint-disable-next-line import/extensions
 import ffmpegworker from '!!file-loader!ffmpeg.js/ffmpeg-worker-mp4.js';
 
-const useProcessVideo = ({ resultRef, onUpdate }) => {
-  const player = resultRef.current;
-  const { upload } = useS3(resultRef);
-  const process = async (blob, trimState) => {
+export const useProcessVideo = (onProgress, onFinish, onError) => {
+  const processVideo = async (blob, trimState) => {
     const startTrimmerOption = trimState?.startTime
       ? ['-ss', trimState.startTime.toFixed(1)]
       : [];
     const endTrimmerOption = trimState?.endTime
       ? ['-to', (trimState.endTime + 0.15).toFixed(1)]
       : [];
-
-    console.log('trimmer option', startTrimmerOption, endTrimmerOption);
     const arrayBuffer = await blob.arrayBuffer();
     const worker = new Worker(ffmpegworker);
     worker.onmessage = e => {
@@ -38,26 +32,16 @@ const useProcessVideo = ({ resultRef, onUpdate }) => {
           });
           break;
         case 'stdout':
-          console.log('worker stdout', msg.data);
-          onUpdate(msg.data);
+          onProgress(msg.data);
           break;
         case 'stderr':
-          console.log('worker stderr', msg.data);
-          onUpdate(msg.data);
+          onError(msg.data);
           break;
         case 'done':
-          console.log('worker done', msg.data);
           const newBlob = new Blob([Uint8Array.from(msg.data.MEMFS[0].data)], {
             type: 'video/quicktime'
           });
-          upload({
-            name: `${new Date().getTime()}.mp4`,
-            file: newBlob
-          });
-          const data = URL.createObjectURL(newBlob);
-          player.src = data;
-          player.play();
-          console.log('blob', blob);
+          onFinish(newBlob);
           break;
         default:
           console.log('default');
@@ -65,7 +49,5 @@ const useProcessVideo = ({ resultRef, onUpdate }) => {
       }
     };
   };
-  return process;
+  return processVideo;
 };
-
-export default useProcessVideo;
